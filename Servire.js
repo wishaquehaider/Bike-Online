@@ -5,7 +5,7 @@ let multer = require('multer')
 let Product = require('./models/Product');
 let User = require('./models/User');
 let Details = require('./models/Details');
-const { FaUniversalAccess } = require('react-icons/fa');
+// const { FaUniversalAccess } = require('react-icons/fa');
 require('./models/db');
 const nodemailer = require("nodemailer");
 
