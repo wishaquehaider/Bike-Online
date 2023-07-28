@@ -229,6 +229,6 @@ userMillGya.password = req.body.password;
 myApp.use(myExpress.static('./build'));
 myApp.use(myExpress.static('/uploadFile'));
 
-myApp.listen(process.env.PORT || 3004,function(){
+myApp.listen(3004,function(){
     console.log('servire challing now');
 })
