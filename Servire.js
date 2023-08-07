@@ -33,12 +33,34 @@ const storage_2 = multer.diskStorage({
 
 const upload_2 = multer({ storage: storage_2 })
 
+const storage_3 = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './servire/uploadFile')
+  },
+  filename: function (req, file, cb) {
+    
+    cb(null, file.originalname);
+  }
+})
+
+const upload_3 = multer({ storage: storage_3 })
 
 
-myApp.post('/user_add',async function(req,resp){
-    let neyaUser = new User(req.body);
+
+myApp.post('/user_add',upload_3.single('file'),async function(req,resp){
+    let neyaUser = new User();
+    neyaUser.name = req.body.name
+    neyaUser.email = req.body.email
+    neyaUser.number = req.body.number
+    neyaUser.term = req.body.term
+    neyaUser.password = req.body.password
+    neyaUser.reEnter = req.body.reEnter
+    neyaUser.type = req.body.type
+    neyaUser.file = req.file.originalname
     await neyaUser.save();
-    resp.end('user add ho gya')
+    resp.json({
+      success:true
+    });
 })
 
 myApp.post('/login_data',async function(req,resp){
@@ -225,9 +247,70 @@ userMillGya.password = req.body.password;
 
 });
 
+myApp.get('/allCustomersDetails',async function(req, resp){
+   let allCustomers = await User.find();
+   resp.json(allCustomers);
+});
 
-myApp.use(myExpress.static('./build'));
-myApp.use(myExpress.static('/uploadFile'));
+
+
+myApp.post('/updatePurchases',async function(req,resp){
+  
+  console.log(req.body);
+  let findedUser = await User.findOne({_id:req.body._id});
+  if(findedUser){
+    findedUser.purchases = req.body.purchases;
+    await findedUser.save();
+    resp.json(findedUser);
+  }
+});
+
+
+
+myApp.post('/updateStatus',async function(req,resp){
+  console.log(req.body);
+  let findedUser = await User.findOne({_id:req.body.userId});
+  if(findedUser){
+    const purchasesWithStatusTrue = findedUser.purchases.map((purchase) => {
+      if(purchase.status){
+        purchase.approved = true;
+
+        return purchase
+      }else{
+        purchase.approved = false
+        return purchase
+      }
+    // purchase.status = true;
+    // return purchase;
+    });
+    console.log(purchasesWithStatusTrue);
+    if (purchasesWithStatusTrue.length > 0) {
+      findedUser.purchases = purchasesWithStatusTrue;
+     await findedUser.save();
+      resp.json(findedUser);
+    }
+    // findedUser.purchases = true
+    // findedUser.save();
+    // resp.json(findedUser);
+  }
+
+});
+
+myApp.get('/updateUserStatus',async function(req,resp){
+  console.log(req.query.anc);
+
+  let findedUser = await User.findOne({_id:req.query.anc});
+  if(findedUser){
+    resp.json(findedUser)
+  }
+ 
+})
+
+
+
+
+// myApp.use(myExpress.static('/build'));
+myApp.use(myExpress.static('servire/uploadFile'));
 
 myApp.listen(3004,function(){
     console.log('servire challing now');

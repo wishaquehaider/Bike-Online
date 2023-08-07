@@ -8,7 +8,20 @@ let userKaSchema = mongoose.Schema({
         type:String,
         required:true
     },
-    purchases:[],
+    purchases:[{
+        status:Boolean,
+        file:String,
+        title:String,
+        sub_heading:String,
+        rating:String,
+        price:String,
+        userId:String,
+        quantity:String,
+        date:String,
+        installment:String,
+        CartInstallment:Array,
+        approved:Boolean
+    }],
     installments:[],
     password:{
         type:String,
@@ -34,7 +47,19 @@ let userKaSchema = mongoose.Schema({
     },
     verificationCode: {
         type: String
+    },
+    number: {
+        type:String,
+        // required:true
+    },
+    file:{
+        type:String,
+        // required:true
     }
+    // status: {
+    //     type: Boolean
+    // },
+       
 });
 
 let User = mongoose.model('User',userKaSchema);

@@ -35,6 +35,16 @@ let productKaScheema = mongoose.Schema({
     },
     pending: {
         type: Number
+    },
+    name: {
+        type: String
+    },
+    installments:[],
+    status:{
+        type:Boolean
+    },
+    approved:{
+        type:Boolean
     }
 
 })
