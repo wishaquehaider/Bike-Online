@@ -254,16 +254,16 @@ myApp.get('/allCustomersDetails',async function(req, resp){
 
 
 
-myApp.post('/updatePurchases',async function(req,resp){
+// myApp.post('/updatePurchases',async function(req,resp){
   
-  console.log(req.body);
-  let findedUser = await User.findOne({_id:req.body._id});
-  if(findedUser){
-    findedUser.purchases = req.body.purchases;
-    await findedUser.save();
-    resp.json(findedUser);
-  }
-});
+//   console.log(req.body);
+//   let findedUser = await User.findOne({_id:req.body._id});
+//   if(findedUser){
+//     findedUser.purchases = req.body.purchases;
+//     await findedUser.save();
+//     resp.json(findedUser);
+//   }
+// });
 
 
 
@@ -272,23 +272,30 @@ myApp.post('/updateStatus',async function(req,resp){
   let findedUser = await User.findOne({_id:req.body.userId});
   if(findedUser){
     const purchasesWithStatusTrue = findedUser.purchases.map((purchase) => {
-      if(purchase.status){
+      // if(purchase.status){
         purchase.approved = true;
 
         return purchase
-      }else{
-        purchase.approved = false
-        return purchase
-      }
+      // }
+      // else{
+      //   purchase.approved = false
+      //   return purchase
+      // }
     // purchase.status = true;
     // return purchase;
     });
-    console.log(purchasesWithStatusTrue);
+
+    
+
+
+    // console.log(purchasesWithStatusTrue);
     if (purchasesWithStatusTrue.length > 0) {
       findedUser.purchases = purchasesWithStatusTrue;
      await findedUser.save();
       resp.json(findedUser);
     }
+
+    
     // findedUser.purchases = true
     // findedUser.save();
     // resp.json(findedUser);

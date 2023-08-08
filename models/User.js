@@ -9,7 +9,7 @@ let userKaSchema = mongoose.Schema({
         required:true
     },
     purchases:[{
-        status:Boolean,
+        // status:Boolean,
         file:String,
         title:String,
         sub_heading:String,

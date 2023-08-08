@@ -40,9 +40,9 @@ let productKaScheema = mongoose.Schema({
         type: String
     },
     installments:[],
-    status:{
-        type:Boolean
-    },
+    // status:{
+    //     type:Boolean
+    // },
     approved:{
         type:Boolean
     }
