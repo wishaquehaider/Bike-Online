@@ -11,7 +11,7 @@ const nodemailer = require("nodemailer");
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, './servire/uploadFile')
+    cb(null, './uploadFile')
   },
   filename: function (req, file, cb) {
     
@@ -23,7 +23,7 @@ const upload = multer({ storage: storage })
 
 const storage_2 = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, './servire/uploadFile')
+    cb(null, './uploadFile')
   },
   filename: function (req, file, cb) {
     
@@ -35,7 +35,7 @@ const upload_2 = multer({ storage: storage_2 })
 
 const storage_3 = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, './servire/uploadFile')
+    cb(null, './uploadFile')
   },
   filename: function (req, file, cb) {
     
@@ -316,8 +316,8 @@ myApp.get('/updateUserStatus',async function(req,resp){
 
 
 
-// myApp.use(myExpress.static('/build'));
-myApp.use(myExpress.static('servire/uploadFile'));
+myApp.use(myExpress.static('./build'));
+myApp.use(myExpress.static('./uploadFile'));
 
 myApp.listen(3004,function(){
     console.log('servire challing now');
